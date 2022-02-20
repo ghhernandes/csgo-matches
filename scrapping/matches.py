@@ -11,8 +11,7 @@ class MatchService:
     def _request_matches_content(self, reset: bool=False) -> Selector:
         if reset or not self.content:
             response = requests.get(self.url)
-            self.content = response.content
-            self.content = Selector(text=self.content)
+            self.content = Selector(text=response.content)
         return self.content
 
     def _get_match_teams(self, data: Selector) -> list[schemas.Team]:
