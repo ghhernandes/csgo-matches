@@ -32,7 +32,7 @@ class MatchService:
         info = data.css('div.matchInfo')
         time = info.css('div.matchTime::text').get()
         meta = info.css('div.matchMeta::text').get()
-        rating = None
+        rating = data.attrib['stars']
         return schemas.MatchInfo(
             time=time,        
             meta=meta,
@@ -41,8 +41,7 @@ class MatchService:
 
     def _get_match(self, data: Selector) -> schemas.Match:
         return schemas.Match(
-            id=0,
-            url='',
+            url=data.css('a').attrib['href'],
             teams=self._get_match_teams(data),
             event=self._get_match_event(data),
             info=self._get_match_info(data)

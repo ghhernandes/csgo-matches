@@ -12,8 +12,7 @@ class MatchEvent(BaseModel):
     name: str        
 
 class Match(BaseModel):
-    id: int
-    url: str
+    url: str | None
     teams: list[Team]
     event: MatchEvent
     info: MatchInfo

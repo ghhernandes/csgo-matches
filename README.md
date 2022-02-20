@@ -1,6 +1,6 @@
 # CS:GO Matches
 
-Extract upcoming and live CS:GO official matches from (https://www.hltv.org/matches).
+Extract upcoming and live CS:GO official matches from (<https://www.hltv.org/matches>).
 
 ```python
 from scrapping import matches, schemas
@@ -17,9 +17,9 @@ for match in match_service.get_upcoming_matches():
 
 ```
 
-## Result:
+## Result
 
-```
+```text
 Live CS:GO matches
 id=0 url='' teams=[Team(name='G2'), Team(name='FURIA')] event=MatchEvent(name='IEM Katowice 2022') info=MatchInfo(time='LIVE', meta='bo3', rating=None)
 id=0 url='' teams=[Team(name='FATE'), Team(name='SKADE')] event=MatchEvent(name='A1 Gaming League Season 5') info=MatchInfo(time='LIVE', meta='bo5', rating=None)
@@ -35,5 +35,4 @@ id=0 url='' teams=[Team(name='GamerLegion'), Team(name='Wisla Krakow')] event=Ma
 id=0 url='' teams=[Team(name='SKADE'), Team(name='SAW')] event=MatchEvent(name='ESL Challenger League Season 40 Europe') info=MatchInfo(time='19:00', meta='bo3', rating=None)
 id=0 url='' teams=[Team(name='SINNERS'), Team(name='Finest')] event=MatchEvent(name='ESL Challenger League Season 40 Europe') info=MatchInfo(time='19:00', meta='bo3', rating=None)
 id=0 url='' teams=[Team(name='X13'), Team(name='ChocoCheck')] event=MatchEvent(name='ESL Challenger League Season 40 North America') info=MatchInfo(time='02:00', meta='bo3', rating=None)
-
 ```
