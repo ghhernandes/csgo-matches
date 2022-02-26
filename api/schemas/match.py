@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 
-class Team(BaseModel):
-    name: str
+from . import team
 
 class MatchInfo(BaseModel):
     time: str
@@ -13,6 +12,6 @@ class MatchEvent(BaseModel):
 
 class Match(BaseModel):
     url: str | None
-    teams: list[Team]
+    teams: list[team.Team]
     event: MatchEvent
     info: MatchInfo
