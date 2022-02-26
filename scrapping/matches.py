@@ -1,7 +1,7 @@
 import requests
 from scrapy.selector import Selector
 
-from . import schemas
+from ..api.schemas import match, team
 
 class MatchService:
     def __init__(self, url: str) -> None:
@@ -14,33 +14,33 @@ class MatchService:
             self.content = Selector(text=response.content)
         return self.content
 
-    def _get_match_teams(self, data: Selector) -> list[schemas.Team]:
-        teams = data.css('div.matchTeam')
+    def _get_match_teams(self, data: Selector) -> list[team.Team]:
+        teams_div = data.css('div.matchTeam')
         result = []
-        for team in teams:
-            team_name = team.css('div.matchTeamName::text').get()
-            result.append(schemas.Team(name=team_name))
+        for team_div in teams_div:
+            team_name = team_div.css('div.matchTeamName::text').get()
+            result.append(team.Team(name=team_name))
         return result
 
-    def _get_match_event(self, data: Selector) -> schemas.MatchEvent:
+    def _get_match_event(self, data: Selector) -> match.MatchEvent:
         event_name = data.css('div.matchEventName::text').get()
-        return schemas.MatchEvent(
+        return match.MatchEvent(
             name=event_name
         )
 
-    def _get_match_info(self, data: Selector) -> schemas.MatchInfo:
+    def _get_match_info(self, data: Selector) -> match.MatchInfo:
         info = data.css('div.matchInfo')
         time = info.css('div.matchTime::text').get()
         meta = info.css('div.matchMeta::text').get()
         rating = data.attrib['stars']
-        return schemas.MatchInfo(
+        return match.MatchInfo(
             time=time,        
             meta=meta,
             rating=rating,
         )
 
-    def _get_match(self, data: Selector) -> schemas.Match:
-        return schemas.Match(
+    def _get_match(self, data: Selector) -> match.Match:
+        return match.Match(
             url=data.css('a').attrib['href'],
             teams=self._get_match_teams(data),
             event=self._get_match_event(data),
@@ -51,7 +51,7 @@ class MatchService:
         empty = data.css('div.matchInfoEmpty')
         return len(empty) > 0    
 
-    def get_upcoming_matches(self) -> list[schemas.Match]:
+    def get_upcoming_matches(self) -> list[match.Match]:
         matches = []
         self.content = self._request_matches_content()    
         upcoming_matches = self.content.css('div.upcomingMatch')
@@ -62,7 +62,7 @@ class MatchService:
             matches.append(match)
         return matches
 
-    def get_live_matches(self) -> list[schemas.Match]:
+    def get_live_matches(self) -> list[match.Match]:
         matches = []
         self.content = self._request_matches_content()    
         live_matches = self.content.css('div.liveMatch-container')
